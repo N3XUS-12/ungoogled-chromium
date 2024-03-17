@@ -1,0 +1,204 @@
+
+Chromium Source Code setup:-----------------------------------------------------------
+
+1. Press Win+R and type cmd.
+2. Press Ctrl+Shift+Enter. Press Yes on the pop-up.
+3. Check if Git and python are installed on your computer by typing:
+git --version
+python --version
+
+If it is installed you should get something like this:
+Python 3.12.2
+
+If it is not installed you should get something like this:
+'python' is not recognized as an internal or external command,
+operable program or batch file.
+
+If neither are installed then download the latest version of each from here:
+Git 64-bit ver --> https://git-scm.com/download/win
+Python Latest ver --> https://www.python.org/downloads/
+
+4. Clone Chromium Source Code:-----------------------------------------------------------
+Clone the Chromium source code repository using depot_tools. Open a command prompt and run the command below.
+You will need a total of 60GB for this to work. So store it in a drive with ample space under a folder named Chromium.
+
+First enter this: cd [the\path\to\Chromium]
+and replace [the\path\to\Chromium] with the actual path to the Chromium folder. Like C:\Chromium:
+
+Then enter this command:
+git clone https://chromium.googlesource.com/chromium/src.git
+
+5. Install Depot Tools:-----------------------------------------------------------
+Clone the depot_tools repository after navigating to the Chromium folder. In Command Prompt run:
+
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+
+6. Add depot_tools to System PATH:-----------------------------------------------------------
+Add the depot_tools directory to your system's PATH environment variable. This allows you to run depot_tools commands from any location in the command prompt.
+
+setx PATH "%PATH%;[C:\path\to\depot_tools]" /M
+
+replace [C:\path\to\depot_tools] with the actual path to depot_tools on your system.
+
+7. Configure Git:-----------------------------------------------------------
+Manually configure Git settings if needed. For example, set core.autocrlf to false.
+
+Run this in cmd: git config --system core.autocrlf false
+
+After running this there should be no response from autocrlf.
+
+If you want to make sure that this worked then run [git config --system core.autocrlf] in cmd and you should see [false] as a response.
+
+8. Add Git to System PATH:-----------------------------------------------------------
+If Git is not already in the system PATH, you need to add it manually. Follow these steps:
+
+Open the start menu and type in Environment variables.
+
+The System Properties dialog should open. Click on Environment Variables at the bottom.
+
+In the Environment Variables window, under the "System variables" section, find and select the "Path" variable.
+Click the "Edit" button.
+
+In the Edit Environment Variable window, click "New" and add the path to the directory containing the Git executable. This is the directory where the git.exe file is located.
+
+For example, if Git is installed in C:\Program Files\Git\bin, add that path.
+
+Click "OK" to close each window.
+
+9. Update depot_tools:-----------------------------------------------------------
+Periodically update your depot_tools to get the latest changes and improvements.
+You should navigate to the folder that contains the file bootstrap.py
+
+--> cd full\path\to\folder containing bootstrap.py
+[example: C:\Chromium\depot_tools or C:\Chromium\depot_tools\bootstrap]
+
+--> git pull
+
+This ensures that you have the latest version of the tools.
+
+If git pull doesn't work then try manually updating the depot_tools by running the command:
+"C:\Program Files\Git\bin\git" pull
+
+This should update the tools if you've downloaded git with the default settings.
+
+If git is installed with default settings and you've tried manually updating the tools then
+try these steps:
+
+A. Check the Status:
+Run the following command to see which files are modified:
+
+Run the command:
+git status
+
+This will show you the files that have been modified.
+
+B. You should get a list of all the files in depot_tools with the unmerged paths at the very end. You have to get rid of those to update the tools. To do so follow these steps:
+
+Go to the depot_tools folder and find each file that is listed.
+Right click and click on [copy as path] for each file.
+Come into CMD and navigate to the bootstrap.py folder. Then type the command:
+
+git add filname1 filename2 filename3
+
+example: git add D:\folder\folder\filename1.txt D:\folder\folder\filename2.py D:\folder\folder\filename3
+
+Press Enter and if nothing happens then it has worked properly.
+After this run the command:
+
+git status
+
+All of the unmerged files should be removed. If there are any unremoved then apply the same steps to remove them.
+After this is done, run the command:
+
+git pull
+
+The tools should get updated and you should recieve a response with file names on the left and numbers on the right.
+Now the tools have been updated and you can start adding to the source code.
+
+10. Explore Chromium Codebase:-----------------------------------------------------------
+Chromium's codebase is extensive, so take some time to explore the structure. The browser UI is primarily in the chrome/browser directory. The components directory contains various modular components.
+
+11. Create you feature:-----------------------------------------------------------
+You're creating a new directory to house your sidebar feature and adding the necessary files for the functionality of you feature. Let's go through the details of this step:
+
+A. Navigate to chrome/browser Directory:
+Change into the chrome/browser directory within your Chromium source code. This is where you'll be adding your new feature component.
+
+cd src/chrome/browser
+
+B. Create a New Directory for Your Feature:
+Create a new directory to organize your feature-related files. You can name it something like my_feature or a more descriptive name based on your feature.
+
+mkdir my_feature
+
+C. Add HTML, CSS, and JavaScript Files:
+Inside your newly created directory, add the necessary files for your feature. Let's say you need an HTML file (feature.html), a CSS file (feature.css), and a JavaScript file (feature.js).
+
+touch my_feature/feature.html
+touch my_feature/feature.css
+touch my_feature/feature.js
+
+If this doesn't work, then you can go to the folder for your feature and add all of these files manually and start editing the code.
+
+Open these files in a text editor of your choice and add your HTML, CSS, and JavaScript code for the functionality of your feature.
+
+For example, feature.html might contain the basic structure of your feature:
+
+<!-- my_feature/feature.html -->
+<div id="myFeature">
+   <!-- feature content goes here -->
+</div>
+
+D. Integrate Feature into Chromium UI:
+Depending on your feature's functionality, you'll likely need to integrate it into the existing Chromium UI. This may involve modifying existing UI components, adding buttons, or creating menu entries.
+
+You might need to look into existing UI elements in Chromium's codebase, such as toolbar buttons, context menus, or the main menu, and modify them to include options for your sidebar.
+
+For example, you might add a button to the toolbar that, when clicked, toggles the visibility of your feature.
+
+E. Handle UI Events and Interactions:
+Implement event handling and interactions in your JavaScript file (feature.js). This file should handle user interactions, communicate with Chrome APIs (if needed), and update the feature content dynamically.
+
+javascript code:
+
+// Example: Toggle sidebar visibility on button click
+document.getElementById('myButton').addEventListener('click', function() {
+   var feature = document.getElementById('myFeature');
+   feature.style.display = (feature.style.display === 'none') ? 'block' : 'none';
+});
+
+Adapt the code based on the specific functionality and behavior you want for your feature.
+
+12. Ensure Content Security Policy (CSP) Compliance:-----------------------------------------------------------
+Be mindful of Chromium's Content Security Policy (CSP) requirements. Ensure that your sidebar code complies with the security policies to prevent security vulnerabilities.
+
+13. Test Locally:-----------------------------------------------------------
+Before integrating your changes into the full Chromium build, test your sidebar locally by loading it as an unpacked extension. Open chrome://extensions/, enable Developer mode, and load your unpacked extension using the "Load unpacked" button.
+
+out/Default/chrome --load-extension=path/to/your/unpacked/extension
+
+Verify that your sidebar behaves as expected and test it with your local Chromium build.
+
+Once you've successfully implemented and tested your sidebar locally, you can proceed with integrating it into the full Chromium build, as outlined in the subsequent steps of the development process.
+
+14. Update chrome.exe.manifest:-----------------------------------------------------------
+Modify the chrome.exe.manifest file to include your new feature files in the content scripts section.
+
+15. Build Chromium:-----------------------------------------------------------
+Build Chromium to apply your changes. Run the following commands:
+
+gn gen out/Default
+ninja -C out/Default
+
+16. Test Your Changes:-----------------------------------------------------------
+Run the Chromium executable to test your changes:
+
+out/Default/chrome
+
+Open the browser and navigate to chrome://extensions/. Enable Developer mode, load the unpacked extension, and select the build output directory.
+
+17. Debug and Iterate:-----------------------------------------------------------
+Use Chrome DevTools for debugging your sidebar feature. Make necessary adjustments, rebuild, and test until your sidebar behaves as desired.
+
+18. Contribute and Share:-----------------------------------------------------------
+If your sidebar feature turns out well and you'd like to contribute to Chromium, follow the Chromium contribution guidelines. Create a Change List (CL), submit it for review, and work with the Chromium community to get your changes accepted.
